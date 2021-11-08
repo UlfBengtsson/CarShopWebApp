@@ -1,0 +1,25 @@
+﻿@model CreateCarViewModel
+
+    <h1>Add car for sale</h1>
+
+    <form asp-action="Create" method="post">
+        <label asp-for="ModelName"></label>
+        <input asp-for="ModelName" />
+        <span asp-validation-for="ModelName"></span>
+
+        <label asp-for="Brand"></label>
+        <input asp-for="Brand" list="brandList" />
+        <span asp-validation-for="Brand"></span>
+        <datalist id="brandList">
+            @foreach (string brandName in Model.BrandList)
+            {
+                <option value="@brandName">@brandName</option>
+            }
+        </datalist>
+
+        <label asp-for="Price"></label>
+        <input asp-for="Price" />
+        <span asp-validation-for="Price"></span>
+
+        <button>Submit</button>
+    </form>

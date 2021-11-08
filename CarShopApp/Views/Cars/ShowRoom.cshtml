@@ -1,0 +1,26 @@
+﻿@model List<Car>
+
+    <h1>Wellcome to the Show room!</h1>
+
+    <a asp-action="Create">Add car for sale</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Brand</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Car car in Model)
+            {
+                <tr>
+                    <td>@car.ModelName</td>
+                    <td>@car.Brand</td>
+                    <td>@car.Price</td>
+                </tr>
+            }
+        </tbody>
+        
+    </table>
