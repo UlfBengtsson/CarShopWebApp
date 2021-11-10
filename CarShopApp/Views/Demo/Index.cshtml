@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Demo Index</h1>
+
+<button onclick="getLastCar('@Url.Action("LastCarAdded","Cars")')">Get last car with AJAX</button>
+<button onclick="getLastCar('@Url.Action("LastCarAddedJSON","Cars")')">Get last car as JSON with AJAX</button>
+<button onclick="getCarList('@Url.Action("AjaxCarList","Cars")')">Get the list of cars with AJAX</button>
+
+<div id="result"></div>
+

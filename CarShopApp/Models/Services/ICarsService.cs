@@ -17,5 +17,7 @@ namespace CarShopApp.Models.Services
         void Edit(int id, CreateCarViewModel editCar);
 
         void Remove(int id);
+
+        Car LastAdded();
     }
 }

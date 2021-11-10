@@ -1,0 +1,19 @@
+﻿@model Car
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<dl>
+    <dt>Model</dt>
+    <dd>@Model.ModelName</dd>
+
+    <dt>Brand</dt>
+    <dd>@Model.Brand</dd>
+
+    <dt>Price</dt>
+    <dd>@Model.Price</dd>
+</dl>
+
+<a asp-action="ShowRoom">Back to Show room</a>

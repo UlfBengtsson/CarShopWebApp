@@ -3,6 +3,8 @@
     <h1>Add car for sale</h1>
 
     <form asp-action="Create" method="post">
+        <div asp-validation-summary="All"></div>
+
         <label asp-for="ModelName"></label>
         <input asp-for="ModelName" />
         <span asp-validation-for="ModelName"></span>

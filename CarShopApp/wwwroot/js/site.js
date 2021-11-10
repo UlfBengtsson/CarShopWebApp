@@ -2,3 +2,30 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+function getLastCar(actionUrl) {
+
+    $.get( actionUrl , function (response) {
+        console.log("response:", response);
+        document.getElementById("result").innerHTML = response;
+    });
+
+}
+
+function getCarList(actionUrl) {
+
+    $.get(actionUrl, function (response) {
+        console.log("response:", response);
+        document.getElementById("result").innerHTML = response;
+    });
+
+}
+
+function getLastCarJSON(actionUrl) {
+
+    $.get(actionUrl, function (response) {
+        console.log("JSON response:", response);
+        document.getElementById("result").innerHTML = response;
+    });
+
+}

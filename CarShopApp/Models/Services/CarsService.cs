@@ -18,6 +18,11 @@ namespace CarShopApp.Models.Services
 
         public Car Create(CreateCarViewModel createCar)
         {
+            if (string.IsNullOrWhiteSpace(createCar.ModelName) || string.IsNullOrWhiteSpace(createCar.Brand))
+            {
+                throw new ArgumentException("Model and Brand may not just be consist of backspace(s)/whitespace(s)");
+            }
+
             Car car = new Car() { 
                 ModelName = createCar.ModelName, 
                 Brand = createCar.Brand, 
@@ -52,6 +57,16 @@ namespace CarShopApp.Models.Services
         public void Remove(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public Car LastAdded()
+        {
+            List<Car> cars = _carsRepo.GetAll();
+            if (cars.Count < 1)
+            {
+                return null;
+            }
+            return cars.Last();
         }
     }
 }

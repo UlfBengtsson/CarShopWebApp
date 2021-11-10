@@ -1,4 +1,6 @@
 ﻿using CarShopApp.Models;
+using CarShopApp.Models.Repos;
+using CarShopApp.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,10 +13,16 @@ namespace CarShopApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ICarsService _carsService;
+
+        public HomeController()
+        {
+            _carsService = new CarsService(new InMemoryCarsRepo());
+        }
 
         public IActionResult Index()
-        {
-            return View();
+        {         
+            return View(_carsService.LastAdded());
         }
 
         public IActionResult Privacy()

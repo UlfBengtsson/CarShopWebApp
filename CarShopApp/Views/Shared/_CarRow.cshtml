@@ -1,0 +1,8 @@
+﻿@model Car
+
+<div class="row">
+    <div class="col-4">@Model.ModelName</div>
+    <div class="col-4">@Model.Brand</div>
+    <div class="col-2">@Model.Price</div>
+    <div class="col-2">@Html.ActionLink("Details", "Details", "Cars", new { id = Model.Id })</div>
+</div>

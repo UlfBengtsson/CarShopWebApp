@@ -1,4 +1,5 @@
-﻿using CarShopApp.Models.Repos;
+﻿using CarShopApp.Models;
+using CarShopApp.Models.Repos;
 using CarShopApp.Models.Services;
 using CarShopApp.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -35,11 +36,70 @@ namespace CarShopApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _carsService.Create(createCar);
+                try
+                {
+                    _carsService.Create(createCar);
+                }
+                catch (ArgumentException exception)
+                {
+                    ModelState.AddModelError("Model & Brand", exception.Message);
+                    return View(createCar);
+                }
 
                 return RedirectToAction(nameof(ShowRoom));
             }
             return View(createCar);
+        }
+
+        public IActionResult Details(int id)
+        {
+            Car car = _carsService.FindById(id);
+
+            if (car == null)
+            {
+                return RedirectToAction(nameof(ShowRoom));
+                //return NotFound();//404
+            }
+
+            return View(car);
+        }
+
+        //------------------------ called by Ajax -----------------------------------------------------
+
+        public IActionResult LastCarAdded()
+        {
+            Car car = _carsService.LastAdded();
+
+            if (car != null)
+            {
+                return PartialView("_CarRow", car);
+            }
+
+            return NotFound();
+        }
+
+        public IActionResult AjaxCarList()
+        {
+            List<Car> cars = _carsService.GetAll();
+
+            if (cars != null)
+            {
+                return PartialView("_ListOfCars", cars);
+            }
+
+            return NotFound();
+        }
+
+        public IActionResult LastCarAddedJSON()
+        {
+            Car car = _carsService.LastAdded();
+
+            if (car != null)
+            {
+                return Json(car);
+            }
+
+            return NotFound();
         }
     }
 }

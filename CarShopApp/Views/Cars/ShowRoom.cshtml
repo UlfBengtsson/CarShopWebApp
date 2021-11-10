@@ -1,15 +1,16 @@
 ﻿@model List<Car>
 
-    <h1>Wellcome to the Show room!</h1>
+<h1>Wellcome to the Show room!</h1>
 
-    <a asp-action="Create">Add car for sale</a>
-
+<a asp-action="Create">Add car for sale</a>
+@*
     <table>
         <thead>
             <tr>
                 <th>Model</th>
                 <th>Brand</th>
                 <th>Price</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -19,8 +20,26 @@
                     <td>@car.ModelName</td>
                     <td>@car.Brand</td>
                     <td>@car.Price</td>
+                    <td>@Html.ActionLink("Details", "Details", "Cars", new { id = car.Id })</td>
                 </tr>
             }
         </tbody>
-        
+
     </table>
+    <hr />*@
+<div class="row">
+    <div class="col-4">Model</div>
+    <div class="col-4">Brand</div>
+    <div class="col-2">Price</div>
+    <div class="col-2"></div>
+</div>
+@foreach (Car car in Model)
+{
+    @*<div class="row">
+        <div class="col-4">@car.ModelName</div>
+        <div class="col-4">@car.Brand</div>
+        <div class="col-2">@car.Price</div>
+        <div class="col-2">@Html.ActionLink("Details", "Details", "Cars", new { id = car.Id })</div>
+    </div>*@
+    <partial name="_CarRow" model="car" />
+}
