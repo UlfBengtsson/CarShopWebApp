@@ -5,9 +5,16 @@
 
 <h1>Demo Index</h1>
 
-<button onclick="getLastCar('@Url.Action("LastCarAdded","Cars")')">Get last car with AJAX</button>
-<button onclick="getLastCar('@Url.Action("LastCarAddedJSON","Cars")')">Get last car as JSON with AJAX</button>
-<button onclick="getCarList('@Url.Action("AjaxCarList","Cars")')">Get the list of cars with AJAX</button>
+<button onclick="getWithAjax('@Url.Action("LastCarAdded","Cars")')">Get last car with AJAX</button>
+<button onclick="getWithAjax('@Url.Action("AjaxCarList","Cars")')">Get the list of cars with AJAX</button>
+<button onclick="getLastCarJSON('@Url.Action("LastCarAddedJSON","Cars")')">Get last car as JSON with AJAX</button>
+<br />
+<input name="id" type="number" step="1" id="idInput" placeholder="Id here" />
+<button onclick="postWithAjax('@Url.Action("AjaxCarDetails","Cars")', 'idInput')">Id Post with AJAX</button>
+<br />
+<input name="brand" type="text" id="brandInput" placeholder="Brand here" />
+<button onclick="postWithAjax('@Url.Action("AjaxCarBrandList","Cars")', 'brandInput')">Brand Post with AJAX</button>
+
 
 <div id="result"></div>
 

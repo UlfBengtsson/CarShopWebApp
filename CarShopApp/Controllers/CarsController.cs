@@ -31,7 +31,7 @@ namespace CarShopApp.Controllers
         }
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(CreateCarViewModel createCar)
         {
             if (ModelState.IsValid)
@@ -65,6 +65,31 @@ namespace CarShopApp.Controllers
         }
 
         //------------------------ called by Ajax -----------------------------------------------------
+
+        public IActionResult AjaxCarBrandList(string brand)
+        {
+            List<Car> cars = _carsService.FindByBrand(brand);
+
+            if (cars != null)
+            {
+                return PartialView("_ListOfCars", cars);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult AjaxCarDetails(int id)
+        {
+            Car car = _carsService.FindById(id);
+
+            if (car != null)
+            {
+                return PartialView("_CarDetails", car);
+            }
+
+            return NotFound();
+        }
 
         public IActionResult LastCarAdded()
         {
@@ -101,5 +126,7 @@ namespace CarShopApp.Controllers
 
             return NotFound();
         }
+
+
     }
 }

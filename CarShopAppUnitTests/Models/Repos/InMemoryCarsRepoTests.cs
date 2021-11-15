@@ -114,5 +114,11 @@ namespace CarShopApp.Models.Repos.Tests
         {
             Assert.True(false, "This test needs an implementation");
         }
+
+        [Fact()]
+        public void DeleteAlreadyDeletedCarTest()
+        {
+            Assert.True(false, "This test needs an implementation");
+        }
     }
 }

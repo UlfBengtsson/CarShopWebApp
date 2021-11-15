@@ -44,7 +44,11 @@ namespace CarShopApp.Models.Services
 
         public List<Car> FindByBrand(string brand)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(brand))
+            {
+                return null;
+            }
+            return _carsRepo.GetByBrand(brand);
         }
 
 

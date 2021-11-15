@@ -1,0 +1,19 @@
+﻿@model Car
+
+<h1>Details</h1>
+
+<dl>
+    <dt>Id</dt>
+    <dd>@Model.Id</dd>
+
+    <dt>Model</dt>
+    <dd>@Model.ModelName</dd>
+
+    <dt>Brand</dt>
+    <dd>@Model.Brand</dd>
+
+    <dt>Price</dt>
+    <dd>@Model.Price</dd>
+</dl>
+
+<a asp-action="ShowRoom">Back to Show room</a>
