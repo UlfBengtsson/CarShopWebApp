@@ -95,18 +95,52 @@ namespace CarShopApp.Models.Repos.Tests
         [Fact()]
         public void GetByIdFoundTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            //Arrange
+            Car testCar = new Car() { Brand = "Fiat", ModelName = "Ducato", Price = 13244.11 };
+            testCar = _carsRepo.Create(testCar);
+
+            //Act
+            Car foundCar = _carsRepo.GetById(int.MaxValue);
+
+            //Assert
+            Assert.Null(foundCar);
+
         }
         [Fact()]
         public void GetByIdNotFoundTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            //Arrange
+            Car testCar = new Car() { Brand = "Fiat", ModelName = "500", Price = 239.11 };
+            testCar = _carsRepo.Create(testCar);
+            
+            //Act
+            Car foundCar = _carsRepo.GetById(testCar.Id);
+
+            //Assert
+            Assert.NotNull(foundCar);
+            Assert.Equal(testCar.Id, foundCar.Id);
+            Assert.Equal(testCar.Brand, foundCar.Brand);
+            Assert.Equal(testCar.ModelName, foundCar.ModelName);
+            Assert.Equal(testCar.Price, foundCar.Price);
         }
 
         [Fact()]
         public void UpdateTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            //Arrange
+            Car testCar = new Car() { Brand = "Fiat", ModelName = "Uno", Price = 1.11 };
+            testCar = _carsRepo.Create(testCar);
+            Car alterCar = new Car() { Id = testCar.Id, Brand = "Renault ", ModelName = "ZOE", Price = 2399.99 };
+
+            //Act
+            _carsRepo.Update(alterCar);
+            Car afterUpdate = _carsRepo.GetById(testCar.Id);
+
+            //Assert
+            Assert.Equal(alterCar.Id, afterUpdate.Id);
+            Assert.Equal(alterCar.Brand, afterUpdate.Brand);
+            Assert.Equal(alterCar.ModelName, afterUpdate.ModelName);
+            Assert.Equal(alterCar.Price, afterUpdate.Price);
         }
 
         [Fact()]
