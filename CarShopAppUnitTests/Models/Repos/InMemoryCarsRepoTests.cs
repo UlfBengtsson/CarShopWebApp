@@ -112,13 +112,65 @@ namespace CarShopApp.Models.Repos.Tests
         [Fact()]
         public void DeleteTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            //Arrange
+            Car testCar1 = new Car() { Brand = "Saab", ModelName = "99", Price = 123.45 };
+            Car testCar2 = new Car() { Brand = "Volvo", ModelName = "240", Price = 687.98 };
+            Car testCar3 = new Car() { Brand = "BMW", ModelName = "M3", Price = 998.58 };
+            testCar1 = _carsRepo.Create(testCar1);
+            testCar2 = _carsRepo.Create(testCar2);
+            testCar3 = _carsRepo.Create(testCar3);
+
+            //Act
+            _carsRepo.Delete(testCar2);
+            List<Car> afterList = _carsRepo.GetAll();
+
+            //Assert
+            Assert.Contains(testCar1, afterList);
+            Assert.Contains(testCar3, afterList);
+            Assert.DoesNotContain(testCar2, afterList);
         }
 
         [Fact()]
         public void DeleteAlreadyDeletedCarTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            //Arrange
+            Car testCar1 = new Car() { Brand = "Saab", ModelName = "93", Price = 123.45 };
+            Car testCar2 = new Car() { Brand = "Volvo", ModelName = "S40", Price = 687.98 };
+            Car testCar3 = new Car() { Brand = "Opel", ModelName = "Sprint", Price = 998.58 };
+            testCar1 = _carsRepo.Create(testCar1);
+            testCar2 = _carsRepo.Create(testCar2);
+            testCar3 = _carsRepo.Create(testCar3);
+
+            //Act
+            int listCountBefore = _carsRepo.GetAll().Count;
+            _carsRepo.Delete(testCar2);
+            int listCountAfterDeleteOnce = _carsRepo.GetAll().Count;
+            _carsRepo.Delete(testCar2);
+            List<Car> afterList = _carsRepo.GetAll();
+
+            //Assert
+            Assert.Contains(testCar1, afterList);
+            Assert.Contains(testCar3, afterList);
+            Assert.DoesNotContain(testCar2, afterList);
+            Assert.True(listCountBefore > listCountAfterDeleteOnce);
+            Assert.Equal(listCountAfterDeleteOnce, afterList.Count);
+        }
+
+        [Fact()]
+        public void CanNotDeletCarThatWasNeverAddedTest()
+        {
+            //Arrange
+            Car testCar = new Car() { Brand = "Ford", ModelName = "GT40", Price = 1230000.45 };
+
+            //Act
+            int listCountBefore = _carsRepo.GetAll().Count;
+            _carsRepo.Delete(testCar);
+            int listCountAfterDelete = _carsRepo.GetAll().Count;
+            List<Car> afterList = _carsRepo.GetAll();
+
+            //Assert
+            Assert.DoesNotContain(testCar, afterList);
+            Assert.Equal(listCountBefore, listCountAfterDelete);
         }
     }
 }
