@@ -60,7 +60,11 @@ namespace CarShopApp.Models.Services
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            Car car = _carsRepo.GetById(id);
+            if (car != null)
+            {
+                _carsRepo.Delete(car);
+            }
         }
 
         public Car LastAdded()

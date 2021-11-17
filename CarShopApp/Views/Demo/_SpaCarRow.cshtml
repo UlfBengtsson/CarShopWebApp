@@ -1,0 +1,8 @@
+﻿@model Car
+
+<div id="@("carId" + Model.Id)" class="row border" >
+    <div class="col-4">@Model.ModelName</div>
+    <div class="col-4">@Model.Brand</div>
+    <div class="col-2">@Model.Price</div>
+    <div class="col-2"><button onclick="getSpaWithAjax('@Url.Action("SpaDetails","Demo", new { id = Model.Id })', '@("carId" + Model.Id)')" class="btn btn-info">Details</button></div>
+</div>

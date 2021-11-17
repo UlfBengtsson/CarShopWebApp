@@ -1,0 +1,12 @@
+﻿@model List<Car>
+
+<div class="row">
+    <div class="col-4">Model</div>
+    <div class="col-4">Brand</div>
+    <div class="col-2">Price</div>
+    <div class="col-2"></div>
+</div>
+@foreach (Car car in Model)
+{
+    <partial name="_SpaCarRow" model="car" />
+}

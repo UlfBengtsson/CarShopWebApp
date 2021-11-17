@@ -1,0 +1,24 @@
+﻿@model Car
+
+<div id="@("carId" + Model.Id)" class="row">
+    <div class="col-10">
+        <dl>
+            <dt>Id</dt>
+            <dd>@Model.Id</dd>
+
+            <dt>Model</dt>
+            <dd>@Model.ModelName</dd>
+
+            <dt>Brand</dt>
+            <dd>@Model.Brand</dd>
+
+            <dt>Price</dt>
+            <dd>@Model.Price</dd>
+        </dl>
+    </div>
+    <div class="col-2">
+        <button onclick="getSpaDeleteWithAjax('@Url.Action("SpaCarDelete","Demo", new { id = Model.Id })', '@("carId" + Model.Id)')" class="btn btn-danger">Delete</button>
+        <button onclick="getSpaWithAjax('@Url.Action("SpaCarRow","Demo", new { id = Model.Id })', '@("carId" + Model.Id)')" class="btn btn-primary">Close</button>
+    </div>
+    
+</div>
