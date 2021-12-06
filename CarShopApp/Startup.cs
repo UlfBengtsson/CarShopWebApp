@@ -1,6 +1,10 @@
+using CarShopApp.Models.Data;
+using CarShopApp.Models.Repos;
+using CarShopApp.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +27,14 @@ namespace CarShopApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ShopDbContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();// IoC & DI
+            services.AddScoped<ICarsRepo, DatabaseCarsRepo>();// IoC & DI
+            
+            services.AddScoped<ICarsService, CarsService>();// IoC & DI
+
             services.AddMvc().AddRazorRuntimeCompilation();
         }
 

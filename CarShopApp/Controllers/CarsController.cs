@@ -14,9 +14,9 @@ namespace CarShopApp.Controllers
     {
         ICarsService _carsService;
 
-        public CarsController()
+        public CarsController(ICarsService carsService)
         {
-            _carsService = new CarsService(new InMemoryCarsRepo());
+            _carsService = carsService;
         }
 
         public IActionResult ShowRoom()
