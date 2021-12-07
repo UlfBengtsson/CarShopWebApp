@@ -15,12 +15,9 @@ namespace CarShopApp.Models.Repos
 
         public Car Create(Car car)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(Car car)
-        {
-            throw new System.NotImplementedException();
+            _shopDbContext.Cars.Add(car);
+            _shopDbContext.SaveChanges();
+            return car;
         }
 
         public List<Car> GetAll()
@@ -30,17 +27,24 @@ namespace CarShopApp.Models.Repos
 
         public List<Car> GetByBrand(string brand)
         {
-            throw new System.NotImplementedException();
+            return _shopDbContext.Cars.Where( car => car.Brand.Contains(brand) ).ToList();
         }
 
         public Car GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return _shopDbContext.Cars.SingleOrDefault( car => car.Id == id);
         }
 
         public void Update(Car car)
         {
-            throw new System.NotImplementedException();
+            _shopDbContext.Cars.Update(car);
+            _shopDbContext.SaveChanges();
+        }
+
+        public void Delete(Car car)
+        {
+            _shopDbContext.Cars.Remove(car);
+            _shopDbContext.SaveChanges();
         }
     }
 }

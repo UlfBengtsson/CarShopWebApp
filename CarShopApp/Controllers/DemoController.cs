@@ -11,11 +11,11 @@ namespace CarShopApp.Controllers
 {
     public class DemoController : Controller
     {
-        private readonly CarsService _carsService;
+        private readonly ICarsService _carsService;
 
-        public DemoController()
+        public DemoController(ICarsService carsService)
         {
-            _carsService = new CarsService(new InMemoryCarsRepo());
+            _carsService = carsService;
         }
 
         public IActionResult Index()
