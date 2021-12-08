@@ -18,14 +18,14 @@ namespace CarShopApp.Models.Services
 
         public Car Create(CreateCarViewModel createCar)
         {
-            if (string.IsNullOrWhiteSpace(createCar.ModelName) || string.IsNullOrWhiteSpace(createCar.Brand))
+            if (string.IsNullOrWhiteSpace(createCar.ModelName))
             {
                 throw new ArgumentException("Model and Brand may not just be consist of backspace(s)/whitespace(s)");
             }
 
             Car car = new Car() { 
                 ModelName = createCar.ModelName, 
-                Brand = createCar.Brand, 
+                BrandId = createCar.BrandId, 
                 Price = createCar.Price 
             };
 

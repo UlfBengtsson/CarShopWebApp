@@ -12,11 +12,13 @@ namespace CarShopApp.Controllers
 {
     public class CarsController : Controller
     {
-        ICarsService _carsService;
+        private readonly ICarsService _carsService;
+        private readonly IBrandService _brandService;
 
-        public CarsController(ICarsService carsService)
+        public CarsController(ICarsService carsService, IBrandService brandService)
         {
             _carsService = carsService;
+            _brandService = brandService;
         }
 
         public IActionResult ShowRoom()
@@ -27,7 +29,10 @@ namespace CarShopApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new CreateCarViewModel());
+            CreateCarViewModel model = new CreateCarViewModel();
+            model.BrandList = _brandService.GetAll();
+
+            return View(model);
         }
 
         [HttpPost]
@@ -43,11 +48,16 @@ namespace CarShopApp.Controllers
                 catch (ArgumentException exception)
                 {
                     ModelState.AddModelError("Model & Brand", exception.Message);
+                    createCar.BrandList = _brandService.GetAll();
+
                     return View(createCar);
                 }
 
                 return RedirectToAction(nameof(ShowRoom));
             }
+
+            createCar.BrandList = _brandService.GetAll();
+
             return View(createCar);
         }
 

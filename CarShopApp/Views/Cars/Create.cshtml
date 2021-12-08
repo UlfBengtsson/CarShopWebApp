@@ -9,15 +9,14 @@
         <input asp-for="ModelName" />
         <span asp-validation-for="ModelName"></span>
 
-        <label asp-for="Brand"></label>
-        <input asp-for="Brand" list="brandList" />
-        <span asp-validation-for="Brand"></span>
-        <datalist id="brandList">
-            @foreach (string brandName in Model.BrandList)
+        <label asp-for="BrandId"></label>
+        <select asp-for="BrandId">
+            @foreach (Brand brand in Model.BrandList)
             {
-                <option value="@brandName">@brandName</option>
+                <option value="@brand.Id">@brand.Name</option>
             }
-        </datalist>
+        </select>
+        <span asp-validation-for="BrandId"></span>
 
         <label asp-for="Price"></label>
         <input asp-for="Price" />

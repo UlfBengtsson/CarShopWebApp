@@ -22,7 +22,7 @@ namespace CarShopApp.Models.Repos.Tests
             Car testCar = new Car();
             int testId = int.MaxValue;
             string testModel = "Models 3";
-            string testBrand = "Tesla";
+            Brand testBrand = new Brand("Tesla");
             double testPrice = 123.45;
             testCar.Id = testId;
             testCar.Brand = testBrand;
@@ -44,9 +44,9 @@ namespace CarShopApp.Models.Repos.Tests
         public void GetAllTest()
         {
             //Arrange
-            Car testCar1 = new Car() { Brand = "Saab", ModelName = "900", Price = 123.45 };
-            Car testCar2 = new Car() { Brand = "Volvo", ModelName = "740", Price = 687.98 };
-            Car testCar3 = new Car() { Brand = "BMW", ModelName = "525i", Price = 998.58 };
+            Car testCar1 = new Car() { Brand = new Brand("Saab"), ModelName = "900", Price = 123.45 };
+            Car testCar2 = new Car() { Brand = new Brand("Volvo"), ModelName = "740", Price = 687.98 };
+            Car testCar3 = new Car() { Brand = new Brand("BMW"), ModelName = "525i", Price = 998.58 };
             testCar1 = _carsRepo.Create(testCar1);
             testCar2 = _carsRepo.Create(testCar2);
             testCar3 = _carsRepo.Create(testCar3);
@@ -67,7 +67,7 @@ namespace CarShopApp.Models.Repos.Tests
         public void GetByBrandTest(string brand, string modelName)
         {
             //Arrange
-            Car testCar = new Car() { Brand = brand, ModelName = modelName, Price = 123.45 };
+            Car testCar = new Car() { Brand = new Brand(brand), ModelName = modelName, Price = 123.45 };
             Car resultCar = _carsRepo.Create(testCar);
 
             //Act
@@ -96,7 +96,7 @@ namespace CarShopApp.Models.Repos.Tests
         public void GetByIdFoundTest()
         {
             //Arrange
-            Car testCar = new Car() { Brand = "Fiat", ModelName = "Ducato", Price = 13244.11 };
+            Car testCar = new Car() { Brand = new Brand("Fiat"), ModelName = "Ducato", Price = 13244.11 };
             testCar = _carsRepo.Create(testCar);
 
             //Act
@@ -110,7 +110,7 @@ namespace CarShopApp.Models.Repos.Tests
         public void GetByIdNotFoundTest()
         {
             //Arrange
-            Car testCar = new Car() { Brand = "Fiat", ModelName = "500", Price = 239.11 };
+            Car testCar = new Car() { Brand = new Brand("Fiat"), ModelName = "500", Price = 239.11 };
             testCar = _carsRepo.Create(testCar);
             
             //Act
@@ -128,9 +128,9 @@ namespace CarShopApp.Models.Repos.Tests
         public void UpdateTest()
         {
             //Arrange
-            Car testCar = new Car() { Brand = "Fiat", ModelName = "Uno", Price = 1.11 };
+            Car testCar = new Car() { Brand = new Brand("Fiat"), ModelName = "Uno", Price = 1.11 };
             testCar = _carsRepo.Create(testCar);
-            Car alterCar = new Car() { Id = testCar.Id, Brand = "Renault ", ModelName = "ZOE", Price = 2399.99 };
+            Car alterCar = new Car() { Id = testCar.Id, Brand = new Brand("Renault "), ModelName = "ZOE", Price = 2399.99 };
 
             //Act
             _carsRepo.Update(alterCar);
@@ -147,9 +147,9 @@ namespace CarShopApp.Models.Repos.Tests
         public void DeleteTest()
         {
             //Arrange
-            Car testCar1 = new Car() { Brand = "Saab", ModelName = "99", Price = 123.45 };
-            Car testCar2 = new Car() { Brand = "Volvo", ModelName = "240", Price = 687.98 };
-            Car testCar3 = new Car() { Brand = "BMW", ModelName = "M3", Price = 998.58 };
+            Car testCar1 = new Car() { Brand = new Brand("Saab"), ModelName = "99", Price = 123.45 };
+            Car testCar2 = new Car() { Brand = new Brand("Volvo"), ModelName = "240", Price = 687.98 };
+            Car testCar3 = new Car() { Brand = new Brand("BMW"), ModelName = "M3", Price = 998.58 };
             testCar1 = _carsRepo.Create(testCar1);
             testCar2 = _carsRepo.Create(testCar2);
             testCar3 = _carsRepo.Create(testCar3);
@@ -168,9 +168,9 @@ namespace CarShopApp.Models.Repos.Tests
         public void DeleteAlreadyDeletedCarTest()
         {
             //Arrange
-            Car testCar1 = new Car() { Brand = "Saab", ModelName = "93", Price = 123.45 };
-            Car testCar2 = new Car() { Brand = "Volvo", ModelName = "S40", Price = 687.98 };
-            Car testCar3 = new Car() { Brand = "Opel", ModelName = "Sprint", Price = 998.58 };
+            Car testCar1 = new Car() { Brand = new Brand("Saab"), ModelName = "93", Price = 123.45 };
+            Car testCar2 = new Car() { Brand = new Brand("Volvo"), ModelName = "S40", Price = 687.98 };
+            Car testCar3 = new Car() { Brand = new Brand("Opel"), ModelName = "Sprint", Price = 998.58 };
             testCar1 = _carsRepo.Create(testCar1);
             testCar2 = _carsRepo.Create(testCar2);
             testCar3 = _carsRepo.Create(testCar3);
@@ -194,7 +194,7 @@ namespace CarShopApp.Models.Repos.Tests
         public void CanNotDeletCarThatWasNeverAddedTest()
         {
             //Arrange
-            Car testCar = new Car() { Brand = "Ford", ModelName = "GT40", Price = 1230000.45 };
+            Car testCar = new Car() { Brand = new Brand("Ford"), ModelName = "GT40", Price = 1230000.45 };
 
             //Act
             int listCountBefore = _carsRepo.GetAll().Count;

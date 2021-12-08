@@ -15,6 +15,10 @@ namespace CarShopApp.Models
         [StringLength(80, MinimumLength = 1)]
         public string Name { get; set; }
 
+        public List<Car> Cars { get; set; }
+
+        public Brand() {}
+
         public Brand(string name)
         {
             Name = name;

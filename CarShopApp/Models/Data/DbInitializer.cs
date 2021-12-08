@@ -10,14 +10,15 @@ namespace CarShopApp.Models.Data
             context.Database.EnsureCreated();
             //context.Database.Migrate();
 
-            if (context.Cars.Any())//seed check
+            if (context.Brands.Any())//seed check
             {
                 return;
             }
 
             //seed in the following into the Db
 
-            context.Cars.Add(new Car() { Brand = "SAAB", ModelName = "900 Turbo", Price = 123456.7 });
+            //context.Cars.Add(new Car() { Brand = "SAAB", ModelName = "900 Turbo", Price = 123456.7 });
+            context.Brands.Add(new Brand("SAAB"));
             context.SaveChanges();//don´t forget to save if your working with the database.
         }
     }

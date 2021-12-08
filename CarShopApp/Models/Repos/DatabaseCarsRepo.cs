@@ -1,4 +1,5 @@
 ﻿using CarShopApp.Models.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,17 +23,17 @@ namespace CarShopApp.Models.Repos
 
         public List<Car> GetAll()
         {
-            return _shopDbContext.Cars.ToList();
+            return _shopDbContext.Cars.Include(car => car.Brand).ToList();
         }
 
         public List<Car> GetByBrand(string brand)
         {
-            return _shopDbContext.Cars.Where( car => car.Brand.Contains(brand) ).ToList();
+            return _shopDbContext.Cars.Where( car => car.Brand.Name.Contains(brand) ).ToList();
         }
 
         public Car GetById(int id)
         {
-            return _shopDbContext.Cars.SingleOrDefault( car => car.Id == id);
+            return _shopDbContext.Cars.Include(car => car.Brand).SingleOrDefault( car => car.Id == id);
         }
 
         public void Update(Car car)

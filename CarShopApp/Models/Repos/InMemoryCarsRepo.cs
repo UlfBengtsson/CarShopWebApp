@@ -28,7 +28,7 @@ namespace CarShopApp.Models.Repos
 
             foreach (Car aCar in carsList)
             {
-                if (aCar.Brand == brand)
+                if (aCar.Brand.Name == brand)
                 {
                     brandedCars.Add(aCar);
                 }

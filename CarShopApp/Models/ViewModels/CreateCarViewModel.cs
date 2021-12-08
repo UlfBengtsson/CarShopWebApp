@@ -13,16 +13,11 @@ namespace CarShopApp.Models.ViewModels
         public string ModelName { get; set; }
 
         [Required]
-        public string Brand { get; set; }
+        [Display(Name = "Brand")]
+        public int BrandId { get; set; }
 
         public double Price { get; set; }
 
-        public List<string> BrandList { 
-            get {
-                return new List<string>
-                {
-                    "SAAB", "BMW", "Volvo", "Seat", "Opel"
-                };
-            } }
+        public List<Brand> BrandList { get; set; }
     }
 }
