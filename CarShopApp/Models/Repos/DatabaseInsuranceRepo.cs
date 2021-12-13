@@ -39,18 +39,30 @@ namespace CarShopApp.Models.Repos
             return _shopDbContext.Insurances.SingleOrDefault(insurance => insurance.Id == id);
         }
 
-        public void Update(Insurance insurance)
+        public bool Update(Insurance insurance)
         {
             //_shopDbContext.Insurances.Update(insurance);
             _shopDbContext.Entry(insurance).State = EntityState.Modified;
-            _shopDbContext.SaveChanges();
+            int result = _shopDbContext.SaveChanges();
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        public void Delete(Insurance insurance)
+        public bool Delete(Insurance insurance)
         {
             _shopDbContext.Insurances.Remove(insurance);
             //_shopDbContext.Entry(insurance).State = EntityState.Deleted;
-            _shopDbContext.SaveChanges();
+            int result = _shopDbContext.SaveChanges();
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

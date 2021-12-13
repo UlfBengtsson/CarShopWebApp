@@ -31,15 +31,16 @@ namespace CarShopApp
             services.AddDbContext<ShopDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();// IoC & DI
-            services.AddScoped<ICarsRepo, DatabaseCarsRepo>();// IoC & DI
-            services.AddScoped<IBrandRepo, DatabaseBrandRepo>();// IoC & DI
-            //services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();replaced with generic version
-            services.AddScoped<IGenericRepo<Insurance, int>, DatabaseInsuranceRepo>();// IoC & DI
+            //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();
+            services.AddScoped<ICarsRepo, DatabaseCarsRepo>();
+            //services.AddScoped<IBrandRepo, DatabaseBrandRepo>();
+            services.AddScoped<IGenericRepo<Brand, int>, DatabaseBrandRepo>();
+            //services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();
+            services.AddScoped<IGenericRepo<Insurance, int>, DatabaseInsuranceRepo>();
             
-            services.AddScoped<ICarsService, CarsService>();// IoC & DI
-            services.AddScoped<IBrandService, BrandService>();// IoC & DI
-            services.AddScoped<IInsuranceService, InsuranceService>();// IoC & DI
+            services.AddScoped<ICarsService, CarsService>();
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IInsuranceService, InsuranceService>();
 
             services.AddMvc().AddRazorRuntimeCompilation();
         }

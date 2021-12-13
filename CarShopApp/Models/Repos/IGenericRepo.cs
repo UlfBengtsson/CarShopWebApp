@@ -16,9 +16,9 @@ namespace CarShopApp.Models.Repos
 
 
         //U
-        void Update(EntityType car);
+        bool Update(EntityType car);
 
         //D
-        void Delete(EntityType car);
+        bool Delete(EntityType car);
     }
 }

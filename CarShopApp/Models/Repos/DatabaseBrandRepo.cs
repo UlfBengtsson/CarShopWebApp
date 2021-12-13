@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarShopApp.Models.Repos
 {
-    public class DatabaseBrandRepo : IBrandRepo
+    public class DatabaseBrandRepo : IGenericRepo<Brand, int>//using a generic version of a Repo
     {
         ShopDbContext _shopDbContext;
 
@@ -23,12 +23,12 @@ namespace CarShopApp.Models.Repos
             return brand;
         }
 
-        public List<Brand> Read()
+        public List<Brand> GetAll()
         {
             return _shopDbContext.Brands.ToList();
         }
 
-        public Brand Read(int id)
+        public Brand GetById(int id)
         {
             return _shopDbContext.Brands.SingleOrDefault(brand => brand.Id == id);
         }
