@@ -34,9 +34,12 @@ namespace CarShopApp
             //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();
             services.AddScoped<ICarsRepo, DatabaseCarsRepo>();
             //services.AddScoped<IBrandRepo, DatabaseBrandRepo>();
-            services.AddScoped<IGenericRepo<Brand, int>, DatabaseBrandRepo>();
+            //services.AddScoped<IGenericRepo<Brand, int>, DatabaseBrandRepo>();
+            services.AddScoped<IGenericRepo<Brand, int>, DatabaseGenericRepo<Brand, int>>();
             //services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();
-            services.AddScoped<IGenericRepo<Insurance, int>, DatabaseInsuranceRepo>();
+            //services.AddScoped<IGenericRepo<Insurance, int>, DatabaseInsuranceRepo>();
+            services.AddScoped<IGenericRepo<Insurance, int>, DatabaseGenericRepo<Insurance, int>>();
+            
             
             services.AddScoped<ICarsService, CarsService>();
             services.AddScoped<IBrandService, BrandService>();

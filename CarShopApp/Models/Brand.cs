@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarShopApp.Models
 {
-    public class Brand
+    public class Brand : BaseEntity<int>
     {
-        [Key]
-        public int Id { get; set; }
 
         [Required]
         [StringLength(80, MinimumLength = 1)]

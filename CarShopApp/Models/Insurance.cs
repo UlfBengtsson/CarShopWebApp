@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarShopApp.Models
 {
-    public class Insurance
+    public class Insurance : BaseEntity<int>
     {
-        [Key]
-        public int Id { get; set; }
 
         public string Name { get; set; }
 

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace CarShopApp.Models.Repos
 {
-    public interface IGenericRepo<EntityType, KeyType>
+    public interface IGenericRepo<EntityType, KeyType> where EntityType : BaseEntity<KeyType>
     {
         //C
-        EntityType Create(EntityType entityType);
+        EntityType Create(EntityType entity);
 
         //R
         List<EntityType> GetAll();
@@ -16,9 +16,9 @@ namespace CarShopApp.Models.Repos
 
 
         //U
-        bool Update(EntityType car);
+        bool Update(EntityType entity);
 
         //D
-        bool Delete(EntityType car);
+        bool Delete(EntityType entity);
     }
 }

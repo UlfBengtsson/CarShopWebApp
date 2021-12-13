@@ -9,9 +9,9 @@ namespace CarShopApp.Models.Services
 {
     public class BrandService : IBrandService
     {
-        private readonly IBrandRepo _brandRepo;
+        private readonly IGenericRepo<Brand, int> _brandRepo;
 
-        public BrandService(IBrandRepo brandRepo)
+        public BrandService(IGenericRepo<Brand, int> brandRepo)
         {
             _brandRepo = brandRepo;
         }
@@ -42,12 +42,12 @@ namespace CarShopApp.Models.Services
 
         public Brand FindById(int id)
         {
-            return _brandRepo.Read(id);
+            return _brandRepo.GetById(id);
         }
 
         public List<Brand> GetAll()
         {
-            return _brandRepo.Read();
+            return _brandRepo.GetAll();
         }
 
         public bool Remove(int id)

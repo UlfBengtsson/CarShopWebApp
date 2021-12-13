@@ -53,7 +53,7 @@ namespace CarShopApp.Models.Repos
             return car;
         }
 
-        public void Update(Car car)
+        public bool Update(Car car)
         {
             Car orignialCar = GetById(car.Id);
 
@@ -62,15 +62,19 @@ namespace CarShopApp.Models.Repos
                 orignialCar.ModelName = car.ModelName;
                 orignialCar.Brand = car.Brand;
                 orignialCar.Price = car.Price;
-            }
 
+                return true;
+            }
+            return false;
         }
-        public void Delete(Car car)
+        public bool Delete(Car car)
         {
             if (car != null)
             {
-                carsList.Remove(car);
+                return carsList.Remove(car);
             }
+
+            return false;
         }
     }
 }

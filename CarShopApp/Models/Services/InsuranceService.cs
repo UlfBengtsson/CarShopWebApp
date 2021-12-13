@@ -9,9 +9,9 @@ namespace CarShopApp.Models.Services
 {
     public class InsuranceService : IInsuranceService
     {
-        private readonly IInsuranceRepo _insuranceRepo;
+        private readonly IGenericRepo<Insurance, int> _insuranceRepo;
 
-        public InsuranceService(IInsuranceRepo insuranceRepo)
+        public InsuranceService(IGenericRepo<Insurance, int> insuranceRepo)
         {
             _insuranceRepo = insuranceRepo;
         }

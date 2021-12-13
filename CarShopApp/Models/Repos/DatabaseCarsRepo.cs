@@ -36,16 +36,30 @@ namespace CarShopApp.Models.Repos
             return _shopDbContext.Cars.Include(car => car.Brand).SingleOrDefault( car => car.Id == id);
         }
 
-        public void Update(Car car)
+        public bool Update(Car car)
         {
             _shopDbContext.Cars.Update(car);
-            _shopDbContext.SaveChanges();
+            int result = _shopDbContext.SaveChanges();
+
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        public void Delete(Car car)
+        public bool Delete(Car car)
         {
             _shopDbContext.Cars.Remove(car);
-            _shopDbContext.SaveChanges();
+            int result = _shopDbContext.SaveChanges();
+
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

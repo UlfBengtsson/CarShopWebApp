@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace CarShopApp.Models
 {
-    public class Car
+    public class Car : BaseEntity<int>
     {
-        [Key]
-        public int Id { get; set; }
         
         public string ModelName { get; set; }
         
