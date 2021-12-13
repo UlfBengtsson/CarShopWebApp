@@ -33,9 +33,11 @@ namespace CarShopApp
             //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();// IoC & DI
             services.AddScoped<ICarsRepo, DatabaseCarsRepo>();// IoC & DI
             services.AddScoped<IBrandRepo, DatabaseBrandRepo>();// IoC & DI
+            services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();// IoC & DI
             
             services.AddScoped<ICarsService, CarsService>();// IoC & DI
             services.AddScoped<IBrandService, BrandService>();// IoC & DI
+            services.AddScoped<IInsuranceService, InsuranceService>();// IoC & DI
 
             services.AddMvc().AddRazorRuntimeCompilation();
         }

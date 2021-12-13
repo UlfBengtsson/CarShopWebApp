@@ -90,8 +90,6 @@ namespace CarShopApp.Controllers
 
         public ActionResult Delete(int id)
         {
-            Brand brand = _brandService.FindById(id);
-
             _brandService.Remove(id);
 
             return RedirectToAction(nameof(Index));
