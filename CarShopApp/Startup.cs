@@ -1,3 +1,4 @@
+using CarShopApp.Models;
 using CarShopApp.Models.Data;
 using CarShopApp.Models.Repos;
 using CarShopApp.Models.Services;
@@ -33,7 +34,8 @@ namespace CarShopApp
             //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();// IoC & DI
             services.AddScoped<ICarsRepo, DatabaseCarsRepo>();// IoC & DI
             services.AddScoped<IBrandRepo, DatabaseBrandRepo>();// IoC & DI
-            services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();// IoC & DI
+            //services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();replaced with generic version
+            services.AddScoped<IGenericRepo<Insurance, int>, DatabaseInsuranceRepo>();// IoC & DI
             
             services.AddScoped<ICarsService, CarsService>();// IoC & DI
             services.AddScoped<IBrandService, BrandService>();// IoC & DI

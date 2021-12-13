@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarShopApp.Models.Repos
 {
-    public class DatabaseInsuranceRepo : IInsuranceRepo
+    public class DatabaseInsuranceRepo : IGenericRepo<Insurance, int>//using a generic version of a Repo
     {
         private readonly ShopDbContext _shopDbContext;
 
