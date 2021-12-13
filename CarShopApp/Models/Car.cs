@@ -20,5 +20,7 @@ namespace CarShopApp.Models
         public Brand Brand { get; set; }
 
         public double Price { get; set; }
+
+        public List<CarInsurance> Insurances { get; set; }
     }
 }

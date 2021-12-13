@@ -15,5 +15,7 @@ namespace CarShopApp.Models
 
         public string Covers { get; set; }
 
+        public List<CarInsurance> CarsCoverd { get; set; }
+
     }
 }
