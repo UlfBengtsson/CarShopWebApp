@@ -9,11 +9,13 @@ namespace CarShopApp.Models.Services
 {
     public class CarsService : ICarsService
     {
-        ICarsRepo _carsRepo;
+        private readonly ICarsRepo _carsRepo;
+        private readonly IBrandRepo _brandRepo;
 
-        public CarsService(ICarsRepo carsRepo)
+        public CarsService(ICarsRepo carsRepo, IBrandRepo brandRepo)
         {
             _carsRepo = carsRepo;
+            _brandRepo = brandRepo;
         }
 
         public Car Create(CreateCarViewModel createCar)
@@ -54,7 +56,17 @@ namespace CarShopApp.Models.Services
 
         public void Edit(int id, CreateCarViewModel editCar)
         {
-            throw new NotImplementedException();
+            Car car = _carsRepo.GetById(id);
+
+            if (car != null)
+            {
+                car.ModelName = editCar.ModelName;
+                car.Price = editCar.Price;
+                car.BrandId = editCar.BrandId;
+                car.Brand = _brandRepo.Read(editCar.BrandId);
+
+                _carsRepo.Update(car);
+            }
         }
 
 
