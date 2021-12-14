@@ -60,7 +60,7 @@ namespace CarShopApp.Controllers
 
                 if (insurance != null)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index), new { message = "Insurance has bin created." });
                 }
                 ModelState.AddModelError("Storage", "Failed to save into storage.");
             }
@@ -75,7 +75,7 @@ namespace CarShopApp.Controllers
 
             if (insurance == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { message = "Unable to find, refreshed list." });
             }
 
             CreateInsuranceViewModel editInsurance = new CreateInsuranceViewModel()
@@ -99,7 +99,7 @@ namespace CarShopApp.Controllers
 
                 if (_insuranceService.Edit(id, editInsurance))
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index), new { message = "Changes saved." });
                 }
                 ModelState.AddModelError("Storage", "Failed to save changes on storage.");
             }

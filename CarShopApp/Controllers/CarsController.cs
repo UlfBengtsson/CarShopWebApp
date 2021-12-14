@@ -61,6 +61,45 @@ namespace CarShopApp.Controllers
             return View(createCar);
         }
 
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Car car = _carsService.FindById(id);
+
+            if (car == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            CreateCarViewModel editCar = new CreateCarViewModel()
+            {
+                ModelName = car.ModelName,
+                Price = car.Price,
+                BrandId = car.Id,
+            };
+            editCar.BrandList = _brandService.GetAll();
+
+            ViewBag.Id = id;
+
+            return View(editCar);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, CreateCarViewModel editCar)
+        {
+            if (ModelState.IsValid)
+            {
+                _carsService.Edit(id, editCar);
+
+                return RedirectToAction(nameof(Index));
+            }
+            editCar.BrandList = _brandService.GetAll();
+            ViewBag.Id = id;
+
+            return View(editCar);
+        }
+
         public IActionResult Details(int id)
         {
             Car car = _carsService.FindById(id);
