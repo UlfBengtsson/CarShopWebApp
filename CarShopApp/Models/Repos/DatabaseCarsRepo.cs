@@ -33,7 +33,10 @@ namespace CarShopApp.Models.Repos
 
         public Car GetById(int id)
         {
-            return _shopDbContext.Cars.Include(car => car.Brand).SingleOrDefault( car => car.Id == id);
+            return _shopDbContext.Cars
+                .Include(car => car.Brand)
+                .Include(car => car.Insurances)//.ThenInclude(carins => carins.Insurance)
+                .SingleOrDefault( car => car.Id == id);
         }
 
         public void Update(Car car)

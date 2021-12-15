@@ -1,0 +1,31 @@
+﻿@model InsuranceCoverageViewModel
+@{
+    ViewData["Title"] = "Insurance Coverage for Car";
+}
+
+<h1>Insurance Coverage for: @Model.Car.Brand.Name - @Model.Car.ModelName</h1>
+
+<div class="row">
+    <div class="col-6">
+        <h4 class="row">Current coverd by</h4>
+        @foreach (var currentInsurance in Model.CurrentInsurances)
+        {
+            <div class="row">
+                <p>@currentInsurance.Name</p>
+                <a class="btn alert-danger" asp-action="RemoveCarInsurance" asp-route-carId="@Model.Car.Id" asp-route-insId="@currentInsurance.Id" >Remove</a>
+            </div>
+        }
+    </div>
+    <div class="col-6">
+        <h4 class="row">Add Insuranse</h4>
+        @foreach (var possibleInsurance in Model.PossibleInsurances)
+        {
+            <div class="row">
+                <p>@possibleInsurance.Name</p>
+                <a class="btn btn-success" asp-action="AddCarInsurance" asp-route-carId="@Model.Car.Id" asp-route-insId="@possibleInsurance.Id" >Add</a>
+            </div>
+        }
+    </div>
+</div>
+
+<a asp-action="Details" asp-route-id="@Model.Car.Id">Back to Details about the Car</a>

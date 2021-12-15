@@ -11,11 +11,13 @@ namespace CarShopApp.Models.Services
     {
         private readonly ICarsRepo _carsRepo;
         private readonly IBrandRepo _brandRepo;
+        private readonly IInsuranceRepo _insuranceRepo;
 
-        public CarsService(ICarsRepo carsRepo, IBrandRepo brandRepo)
+        public CarsService(ICarsRepo carsRepo, IBrandRepo brandRepo, IInsuranceRepo insuranceRepo)
         {
             _carsRepo = carsRepo;
             _brandRepo = brandRepo;
+            _insuranceRepo = insuranceRepo;
         }
 
         public Car Create(CreateCarViewModel createCar)
@@ -87,6 +89,47 @@ namespace CarShopApp.Models.Services
                 return null;
             }
             return cars.Last();
+        }
+
+        public InsuranceCoverageViewModel InsuranceCoverage(Car car)
+        {
+            InsuranceCoverageViewModel insuranceCoverage = new InsuranceCoverageViewModel();
+            insuranceCoverage.Car = car;
+
+            List<Insurance> allInsurances = _insuranceRepo.GetAll();
+
+            foreach (CarInsurance carInsurance in car.Insurances)
+            {
+                Insurance insurance = allInsurances.Single(ins => ins.Id == carInsurance.InsuranceId);
+                insuranceCoverage.CurrentInsurances.Add(insurance);
+                allInsurances.Remove(insurance);
+            }
+
+            insuranceCoverage.PossibleInsurances = allInsurances;
+
+            return insuranceCoverage;
+        }
+
+        public void RemoveCarInsurance(Car car, int insuranceId)
+        {
+            CarInsurance insurance = car.Insurances.SingleOrDefault(carIns => carIns.InsuranceId == insuranceId);
+            
+            car.Insurances.Remove(insurance);
+            
+            _carsRepo.Update(car);
+        }
+
+        public void AddCarInsurance(Car car, int insuranceId)
+        {
+            CarInsurance insurance = new CarInsurance()
+            {
+                InsuranceId = insuranceId,
+                CarId = car.Id
+            };
+
+            car.Insurances.Add(insurance);
+
+            _carsRepo.Update(car);
         }
     }
 }

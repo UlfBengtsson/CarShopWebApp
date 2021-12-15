@@ -19,5 +19,10 @@ namespace CarShopApp.Models.Services
         void Remove(int id);
 
         Car LastAdded();
+
+        InsuranceCoverageViewModel InsuranceCoverage(Car car);
+
+        void RemoveCarInsurance(Car car, int insuranceId);
+        void AddCarInsurance(Car car, int insuranceId);
     }
 }

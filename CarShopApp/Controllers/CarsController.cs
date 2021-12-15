@@ -112,6 +112,49 @@ namespace CarShopApp.Controllers
 
             return View(car);
         }
+        
+        public IActionResult InsuranceCoverage(int id)
+        {
+            Car car = _carsService.FindById(id);
+
+            if (car == null)
+            {
+                return RedirectToAction(nameof(ShowRoom));
+                //return NotFound();//404
+            }
+
+            return View(_carsService.InsuranceCoverage(car));
+        }
+
+        public IActionResult RemoveCarInsurance(int carId, int insId)
+        {
+            Car car = _carsService.FindById(carId);
+
+            if (car == null)
+            {
+                return RedirectToAction(nameof(ShowRoom));
+                //return NotFound();//404
+            }
+
+            _carsService.RemoveCarInsurance(car, insId);
+
+            return RedirectToAction(nameof(InsuranceCoverage), new { id = car.Id });
+        }
+
+        public IActionResult AddCarInsurance(int carId, int insId)
+        {
+            Car car = _carsService.FindById(carId);
+
+            if (car == null)
+            {
+                return RedirectToAction(nameof(ShowRoom));
+                //return NotFound();//404
+            }
+
+            _carsService.AddCarInsurance(car, insId);
+
+            return RedirectToAction(nameof(InsuranceCoverage), new { id = car.Id });
+        }
 
         //------------------------ called by Ajax -----------------------------------------------------
 
