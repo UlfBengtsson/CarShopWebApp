@@ -1,14 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarShopApp.Models.Data
 {
-    public class ShopDbContext : DbContext
+    public class ShopDbContext : IdentityDbContext<IdentityUser>
     {
         public ShopDbContext(DbContextOptions<ShopDbContext> options) : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); //Recommend on the first line inside method.
+            
             #region CarInsurance Join Class Config
 
             modelBuilder.Entity<CarInsurance>().HasKey(ci =>
