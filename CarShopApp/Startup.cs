@@ -35,6 +35,11 @@ namespace CarShopApp
                 .AddEntityFrameworkStores<ShopDbContext>()
                 .AddDefaultTokenProviders();
 
+            //services.Configure<IdentityOptions>(options => 
+            //{
+                
+            //});
+
             //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();// IoC & DI
             services.AddScoped<ICarsRepo, DatabaseCarsRepo>();// IoC & DI
             services.AddScoped<IBrandRepo, DatabaseBrandRepo>();// IoC & DI

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+@if (ViewBag.Msg != null)
+{
+<h4 class="text-danger">ViewBag.Msg</h4>
+}
+
+<form asp-action="Login" method="POST">
+
+    <input type="text" name="userName" />
+    <input type="password" name="password" />
+
+    @*Dont for get to add Forgot password?*@
+
+    <button>Login</button>
+
+</form>
