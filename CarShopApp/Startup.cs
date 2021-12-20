@@ -35,10 +35,15 @@ namespace CarShopApp
                 .AddEntityFrameworkStores<ShopDbContext>()
                 .AddDefaultTokenProviders();
 
-            //services.Configure<IdentityOptions>(options => 
-            //{
-                
-            //});
+            services.Configure<IdentityOptions>(options =>
+            {   // Default Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
 
             //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();// IoC & DI
             services.AddScoped<ICarsRepo, DatabaseCarsRepo>();// IoC & DI
