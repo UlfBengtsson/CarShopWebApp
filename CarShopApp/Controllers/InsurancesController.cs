@@ -1,6 +1,7 @@
 ﻿using CarShopApp.Models;
 using CarShopApp.Models.Services;
 using CarShopApp.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarShopApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class InsurancesController : Controller
     {
         private readonly IInsuranceService _insuranceService;

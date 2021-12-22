@@ -45,14 +45,18 @@ namespace CarShopApp
                 options.Password.RequiredUniqueChars = 1;
             });
 
-            //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();// IoC & DI
-            services.AddScoped<ICarsRepo, DatabaseCarsRepo>();// IoC & DI
-            services.AddScoped<IBrandRepo, DatabaseBrandRepo>();// IoC & DI
-            services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();// IoC & DI
+            #region IoC & DI
 
-            services.AddScoped<ICarsService, CarsService>();// IoC & DI
-            services.AddScoped<IBrandService, BrandService>();// IoC & DI
-            services.AddScoped<IInsuranceService, InsuranceService>();// IoC & DI
+            //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();
+            services.AddScoped<ICarsRepo, DatabaseCarsRepo>();
+            services.AddScoped<IBrandRepo, DatabaseBrandRepo>();
+            services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();
+
+            services.AddScoped<ICarsService, CarsService>();
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IInsuranceService, InsuranceService>();
+
+            #endregion
 
             services.AddMvc().AddRazorRuntimeCompilation();
         }

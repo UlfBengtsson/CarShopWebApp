@@ -1,0 +1,43 @@
+﻿@model ManageRoleViewModel
+
+@{
+    ViewData["Title"] = "Manage Role";
+}
+
+<div>
+    <h4>Manage Role: @Model.Role.Name</h4>
+    @if (ViewBag.Msg != null)
+    {
+        <h5>@ViewBag.Msg</h5>
+    }
+    <hr />
+    <dl class="row">
+        <dt>Id</dt>
+        <dd>@Model.Role.Id</dd>
+        <dt>Name</dt>
+        <dd>@Model.Role.Name</dd>
+    </dl>
+</div>
+<div class="row">
+    <div class="col-6">
+        <h5>User has this Role</h5>
+
+        @foreach (var item in Model.UserHasRole)
+        {
+            <div class="row">
+                <p>@item.UserName</p>
+                <a class="btn btn-danger" asp-action="RemoveUserFromRole" asp-route-roleId="@Model.Role.Id" asp-route-userId="@item.Id" >Remove</a>
+            </div>
+        }
+    </div>
+    <div class="col-6">
+        <h5>User does not have Role</h5>
+        @foreach (var item in Model.UserNotRole)
+        {
+    <div class="row">
+        <p>@item.UserName</p>
+        <a class="btn btn-success" asp-action="AddUserToRole" asp-route-roleId="@Model.Role.Id" asp-route-userId="@item.Id">Add</a>
+    </div>
+        }
+    </div>
+</div>

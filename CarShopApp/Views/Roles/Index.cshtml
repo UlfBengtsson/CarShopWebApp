@@ -1,0 +1,29 @@
+﻿@model List<IdentityRole>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<a asp-action="Create">Create new role</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>   
+    <tbody>
+    @foreach (IdentityRole aRole in Model)
+    {
+        <tr>
+            <td>@aRole.Id</td>
+            <td>@aRole.Name</td>
+            <td><a asp-action="ManageRole" asp-route-id="@aRole.Id">Manage</a></td> 
+        </tr>
+    }
+    </tbody>
+
+</table>
