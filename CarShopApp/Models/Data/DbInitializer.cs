@@ -1,23 +1,44 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CarShopApp.Models.Data
 {
     internal class DbInitializer
     {
-        internal static void Initialize(ShopDbContext context)
+        internal static async Task Initialize(ShopDbContext context, RoleManager<IdentityRole> roleManager)
         {
             context.Database.EnsureCreated();
             //context.Database.Migrate();
 
-            if (context.Brands.Any())//seed check
+            if (context.Roles.Any())//seed check
             {
                 return;
             }
 
             //seed in the following into the Db
 
-            //context.Cars.Add(new Car() { Brand = "SAAB", ModelName = "900 Turbo", Price = 123456.7 });
+            IdentityRole role = new IdentityRole("Admin");
+
+            IdentityResult identityResult = await roleManager.CreateAsync(role);
+
+            if (identityResult.Succeeded)
+            {
+                //Add user
+                //add user to role
+            }
+            else
+            {
+                string errors = "";
+                foreach (var item in identityResult.Errors)
+                {
+                    errors += item.Code + " | " + item.Description;
+                }
+                throw new Exception(errors);
+            }
+
             context.Brands.Add(new Brand("SAAB"));
             context.SaveChanges();//don´t forget to save if your working with the database.
         }

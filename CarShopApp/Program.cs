@@ -1,6 +1,7 @@
 using CarShopApp.Models.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -36,8 +37,10 @@ namespace CarShopApp
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<ShopDbContext>();
-                    DbInitializer.Initialize(context);
+                    ShopDbContext context = services.GetRequiredService<ShopDbContext>();
+                    RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+                    DbInitializer.Initialize(context, roleManager).Wait();
                 }
                 catch (Exception ex)
                 {
