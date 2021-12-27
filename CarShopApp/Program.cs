@@ -39,8 +39,9 @@ namespace CarShopApp
                 {
                     ShopDbContext context = services.GetRequiredService<ShopDbContext>();
                     RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
 
-                    DbInitializer.Initialize(context, roleManager).Wait();
+                    DbInitializer.Initialize(context, roleManager, userManager).Wait();
                 }
                 catch (Exception ex)
                 {

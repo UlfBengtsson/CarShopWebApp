@@ -8,7 +8,10 @@ namespace CarShopApp.Models.Data
 {
     internal class DbInitializer
     {
-        internal static async Task Initialize(ShopDbContext context, RoleManager<IdentityRole> roleManager)
+        internal static async Task Initialize(
+            ShopDbContext context, 
+            RoleManager<IdentityRole> roleManager, 
+            UserManager<IdentityUser> userManager)
         {
             context.Database.EnsureCreated();
             //context.Database.Migrate();
@@ -22,25 +25,42 @@ namespace CarShopApp.Models.Data
 
             IdentityRole role = new IdentityRole("Admin");
 
-            IdentityResult identityResult = await roleManager.CreateAsync(role);
+            IdentityResult roleResult = await roleManager.CreateAsync(role);
 
-            if (identityResult.Succeeded)
+            if (!roleResult.Succeeded)
             {
-                //Add user
-                //add user to role
+                MakeErrorMsgAndThrow(roleResult);
             }
-            else
+
+            //Add user
+            IdentityUser identityUser = new IdentityUser("Admin");
+            IdentityResult userResult = await userManager.CreateAsync(identityUser, "Qwerty!23456");
+
+            if (!userResult.Succeeded)
             {
-                string errors = "";
-                foreach (var item in identityResult.Errors)
-                {
-                    errors += item.Code + " | " + item.Description;
-                }
-                throw new Exception(errors);
+                MakeErrorMsgAndThrow(userResult);
+            }
+
+            //add user to role
+            IdentityResult userRoleResult = await userManager.AddToRoleAsync(identityUser, role.Name);
+
+            if (!userRoleResult.Succeeded)
+            {
+                MakeErrorMsgAndThrow(userRoleResult);
             }
 
             context.Brands.Add(new Brand("SAAB"));
             context.SaveChanges();//don´t forget to save if your working with the database.
+        }
+
+        private static void MakeErrorMsgAndThrow(IdentityResult userRoleResult)
+        {
+            string errors = "";
+            foreach (var item in userRoleResult.Errors)
+            {
+                errors += item.Code + " | " + item.Description;
+            }
+            throw new Exception(errors);
         }
     }
 }
