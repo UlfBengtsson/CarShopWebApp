@@ -9,9 +9,9 @@ namespace CarShopApp.Models.Data
     internal class DbInitializer
     {
         internal static async Task Initialize(
-            ShopDbContext context, 
-            RoleManager<IdentityRole> roleManager, 
-            UserManager<IdentityUser> userManager)
+            ShopDbContext               context, 
+            RoleManager<IdentityRole>   roleManager, 
+            UserManager<IdentityUser>   userManager)
         {
             context.Database.EnsureCreated();
             //context.Database.Migrate();

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,24 @@ namespace CarShopApp
 
             #endregion
 
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Shop of Cars API",
+                    Version = "v1"
+                });
+            });
+
+            services.AddCors(options =>
+             {
+                 options.AddPolicy(name: "MyAllowSpecificOrigins",
+                                   builder =>
+                                   {
+                                       builder.WithOrigins("*");// replace "*" with the domain or adress from were you will make request from "http://www.my-domain.com"
+                                   });
+             });
+
             services.AddMvc().AddRazorRuntimeCompilation();
         }
 
@@ -79,8 +98,13 @@ namespace CarShopApp
 
             app.UseRouting();
 
+            app.UseCors("MyAllowSpecificOrigins");
+
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(option => { option.SwaggerEndpoint("/swagger/v1/swagger.json", "Cars API"); });
 
             app.UseEndpoints(endpoints =>
             {
