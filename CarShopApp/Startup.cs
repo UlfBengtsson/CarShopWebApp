@@ -3,7 +3,7 @@ using CarShopApp.Models.Repos;
 using CarShopApp.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +12,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
+using CarShopApp.Util.Swagger;
+using Microsoft.AspNetCore.Identity;
 
 namespace CarShopApp
 {
@@ -30,14 +35,68 @@ namespace CarShopApp
             services.AddDbContext<ShopDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            #region Identity
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                        .AddEntityFrameworkStores<ShopDbContext>()
+                        .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings  
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login  
+                options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout  
+                options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied  
+                options.SlidingExpiration = true;
+            });
+
+            #endregion
+
+            #region JWT Toekn
+
+            services.AddAuthentication()
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtOption =>
+                {
+                    jwtOption.SaveToken = true;
+                    jwtOption.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateActor = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.FromMinutes(5),
+                        ValidIssuer = Configuration["JWTConfiguration:Issuer"],
+                        ValidAudience = Configuration["JWTConfiguration:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["JWTConfiguration:SigningKey"]))
+                    };
+                }
+            );
+
+            #endregion
+
             //services.AddScoped<ICarsRepo, InMemoryCarsRepo>();// IoC & DI
-            services.AddScoped<ICarsRepo, DatabaseCarsRepo>();// IoC & DI
-            services.AddScoped<IBrandRepo, DatabaseBrandRepo>();// IoC & DI
-            services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();// IoC & DI
+            services.AddScoped<ICarsRepo, DatabaseCarsRepo>();
+            services.AddScoped<IBrandRepo, DatabaseBrandRepo>();
+            services.AddScoped<IInsuranceRepo, DatabaseInsuranceRepo>();
             
-            services.AddScoped<ICarsService, CarsService>();// IoC & DI
-            services.AddScoped<IBrandService, BrandService>();// IoC & DI
-            services.AddScoped<IInsuranceService, InsuranceService>();// IoC & DI
+            services.AddScoped<ICarsService, CarsService>();
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IInsuranceService, InsuranceService>();
+            
+            services.AddScoped<IJwtService, JwtService>();
+
+            #region Swagger
+            //Made a class to contain the bigger part of the settings to lessen bloting
+            SwaggerConfiger.SwaggerSetup(services, new OpenApiInfo()
+            {
+                Version = "v1",
+                Title = "Shop of Cars API",
+                Description = "ASP.NET Core 3.1 with API"
+            });
+
+            #endregion
 
             services.AddMvc().AddRazorRuntimeCompilation();
         }
@@ -58,8 +117,18 @@ namespace CarShopApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cars API V1");
+            });
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
