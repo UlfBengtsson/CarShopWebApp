@@ -81,7 +81,7 @@ namespace CarShopApp.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                ModelState.AddModelError("", "Unable to save changes");
+                ModelState.AddModelError("Storage", "Unable to save changes");
             }
 
             ViewBag.BrandId = id;
